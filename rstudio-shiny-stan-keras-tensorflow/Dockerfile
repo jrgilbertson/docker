@@ -26,35 +26,23 @@ RUN apt-get update \
 		libglu1-mesa-dev \
 		## Add for a couple of packages
 		&& R -e "source('https://bioconductor.org/biocLite.R')" \
-	# && apt-get clean \
-	# && rm -rf /var/lib/apt/lists/ \
-	# && rm -rf /tmp/downloaded_packages/ /tmp/*.rds
-RUN install2.r --error \
-	devtools \
-	testthat
-	
-# ---------- Stan ----------
+	RUN install2.r --error \
+		devtools \
+		testthat
+
+# ---------- RStan ----------
 
 # Source: https://hub.docker.com/r/andrewheiss/tidyverse-rstanarm/~/dockerfile/
-
-# RUN R -e "devtools::install_github('omegahat/Rcompression')"
-
 # Starting with Stan as requires the most manual configuration and is a dependency 
 # for some other packages. Docker Hub (and Docker in general) chokes on memory issues 
 # when compiling with gcc, so copy custom CXX settings to /root/.R/Makevars and use 
 # ccache and clang++ instead
-
-# Make ~/.R
-# RUN mkdir -p $HOME/.R
-# $HOME doesn't exist in the COPY shell, so be explicit
-# COPY R/Makevars /root/.R/Makevars
-
 RUN mkdir -p $HOME/.R/ \
 	&& echo "\nCXX=clang++ -ftemplate-depth-256\n" >> $HOME/.R/Makevars \
 	&& echo "CC=clang\n" >> $HOME/.R/Makevars
 
 # Install ggplot extensions like ggstance and ggrepel
-# Install ed, since nloptr needs it to compile.
+# Install ed, since nloptr needs it to compile
 # Install all the dependencies needed by rstanarm and friends
 # Install multidplyr for parallel tidyverse magic
 RUN apt-get -y --no-install-recommends install \
@@ -67,8 +55,9 @@ RUN apt-get -y --no-install-recommends install \
         colourpicker DT dygraphs gtools rsconnect shinyjs shinythemes threejs \
         xts bayesplot lme4 loo rstantools StanHeaders RcppEigen \
         rstan shinystan rstanarm \
-    && R -e "library(devtools); \
-        install_github('hadley/multidplyr');"
+	# Have to install here even though installed earlier through install2.r. TODO: Explore rstudio vs r libpaths
+	&& R -e "install.packages('devtools')" \
+    && R -e "devtools::install_github('hadley/multidplyr')"
 
 # ---------- Keras and Tensorflow ----------
 
@@ -78,6 +67,8 @@ RUN pip install virtualenv
 RUN R -e "devtools::install_github('rstudio/tensorflow')"
 RUN R -e "devtools::install_github('rstudio/keras')"
 RUN R -e "keras::install_keras(tensorflow = 'gpu')"
+
+# ---------- Miscellaneous Packages ----------
 
 # Add additional R packages not in rstudio build
 RUN install2.r --error \
