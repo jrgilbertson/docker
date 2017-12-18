@@ -89,4 +89,4 @@ RUN install2.r --error \
 
 RUN install2.r --error \
 	--deps TRUE \
-	googleCloudStorageR bigQueryR RoogleVision googleComputeEngineR
+	googleCloudStorageR bigQueryR googleComputeEngineR
