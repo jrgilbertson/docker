@@ -7,25 +7,33 @@ MAINTAINER "Jason Gilbertson" jason.gilbertson@gmail.com
 
 RUN apt-get update \
 	&& apt-get install -y --no-install-recommends \
-		## for rJava
+		# For rJava
 		default-jdk \
-		## used to build rJava and other packages
+		# Used to build rJava and other packages
 		libbz2-dev \
 		libicu-dev \
 		liblzma-dev \
-		## system dependency of hunspell (devtools)
+		# System dependency of hunspell (devtools)
 		libhunspell-dev \
-		## system dependency of hadley/pkgdown
+		# System dependency of hadley/pkgdown
 		libmagick++-dev \
-		## for git via ssh key 
+		# For git via ssh key 
 		ssh \
-		## fix for the tcltk loading fail
+		# Fix for the tcltk loading fail
 		tk \
-		## fix for missing required header GL/gl.h
+		# Fix for missing required header GL/gl.h
 		mesa-common-dev \
 		libglu1-mesa-dev \
-		## Add for a couple of packages
+		# Fix for fatal error: 'omp.h' file not found
+		libomp-dev \
+		# Fix for fatal error: 'gsl/gsl_rng.h' file not found
+		libgsl-dev \
+		# Fix for libmysqlclient not found
+		libmariadb-client-lgpl-dev \
+		# Add for a couple of packages
 		&& R -e "source('https://bioconductor.org/biocLite.R')" \
+		# Fix for missing 'graph' package
+		&& R -e "BiocInstaller::biocLite('graph')" \
 	RUN install2.r --error \
 		devtools \
 		testthat
