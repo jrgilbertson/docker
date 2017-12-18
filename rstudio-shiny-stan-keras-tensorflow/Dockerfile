@@ -84,3 +84,9 @@ RUN install2.r --error \
 	tidyverse caret GGally outliers hrbrthemes reprex \
 	broom lubridate tidytext sparklyr xgboost syuzhet \
 	lime quantmod zoo igraph h2o
+	
+# ---------- Google Cloud Specific Items ----------
+
+RUN install2.r --error \
+	--deps TRUE \
+	googleCloudStorageR bigQueryR RoogleVision googleComputeEngineR
