@@ -4,8 +4,6 @@ This is an in-progress build for R which includes RStudio, Shiny, Stan, Keras an
 
 The purpose of this build is for R&D and exploratory work. It would be more Docker-esque if this was broken into multiple, more focused builds. For exploratory work, however, I prefer to reduce friction so the goal is to integrate the main tools into one build.
 
-***This build is in progress and not yet complete.***
-
 # Quickstart
 
 Start with the default options of user = rstudio and password = rstudio. This is **not recommended** for public instances.
