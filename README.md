@@ -8,19 +8,19 @@ The purpose of this build is for R&D and exploratory work. It would be more Dock
 
 Start with the default options of user = rstudio and password = rstudio. This is **not recommended** for public instances.
 
-```docker run -d -p 8787:8787 jrgilbertson/rstudio-shiny-stan-keras-tensorflow```
+```docker run -d -p 8787:8787 jrgilbertson/r_data_science_machine```
 
 Start with user-defined user and password.
 
-```docker run -d -p 8787:8787 -e USER=<username> -e PASSWORD=<password> jrgilbertson/rstudio-shiny-stan-keras-tensorflow```
+```docker run -d -p 8787:8787 -e USER=<username> -e PASSWORD=<password> jrgilbertson/r_data_science_machine```
 
 Start with user-defined user and password with root access.
 
-```docker run -d -p 8787:8787 -e USER=<username> -e PASSWORD=<password> -e ROOT=TRUE jrgilbertson/rstudio-shiny-stan-keras-tensorflow```
+```docker run -d -p 8787:8787 -e USER=<username> -e PASSWORD=<password> -e ROOT=TRUE jrgilbertson/r_data_science_machine```
 
 Add a Shiny server on startup.
 
-```docker run -d -p 3838:3838 -p 8787:8787 -e ADD=shiny jrgilbertson/rstudio-shiny-stan-keras-tensorflow```
+```docker run -d -p 3838:3838 -p 8787:8787 -e ADD=shiny jrgilbertson/r_data_science_machine```
 
 # References
 
