@@ -1,6 +1,6 @@
 # Docker build for the ultimate R data science machine
 
-This is an in-progress build for R which includes RStudio, Shiny, Stan, Keras and Tensorflow along with the major statisitical and machine learning packages.
+R data science machine which includes RStudio, Shiny, Stan, Keras and Tensorflow along with the major statisitical and machine learning packages.
 
 The purpose of this build is for R&D and exploratory work. It would be more Docker-esque if this was broken into multiple, more focused builds. For exploratory work, however, I prefer to reduce friction so the goal is to integrate the main tools into one build.
 
