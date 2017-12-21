@@ -83,7 +83,7 @@ RUN install2.r --error \
 	--deps TRUE \
 	tidyverse caret GGally outliers hrbrthemes reprex \
 	broom lubridate tidytext sparklyr xgboost syuzhet \
-	lime quantmod zoo igraph h2o
+	lime quantmod zoo igraph h2o lintr
 	
 # ---------- Google Cloud Specific Items ----------
 
