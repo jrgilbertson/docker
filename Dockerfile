@@ -79,12 +79,15 @@ RUN R -e "keras::install_keras(tensorflow = 'gpu')"
 # ---------- Miscellaneous Packages ----------
 
 # Add additional R packages not in rstudio build
+# skimr: Efficient dataframe summary statistics
 # reticulate: Python interface in R
+# profvis: Code profiler for RStudio
 RUN install2.r --error \
 	--deps TRUE \
 	tidyverse caret GGally outliers hrbrthemes reprex \
 	broom lubridate tidytext sparklyr xgboost syuzhet \
-	lime quantmod zoo igraph h2o lintr skimr reticulate
+	lime quantmod zoo igraph h2o lintr skimr reticulate \
+        profvis
 	
 # ---------- Cloud Specific Items ----------
 
