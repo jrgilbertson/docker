@@ -84,15 +84,7 @@ RUN install2.r --error \
 	tidyverse caret GGally outliers hrbrthemes reprex \
 	broom lubridate tidytext sparklyr xgboost syuzhet \
 	lime quantmod zoo igraph h2o lintr skimr profvis
-	
-# ---------- Anaconda and Jupyter for Python development ----------
 
-RUN wget https://repo.continuum.io/archive/Anaconda3-5.1.0-Linux-x86_64.sh
-RUN bash Anaconda3-5.1.0-Linux-x86_64.sh -b -p ~/anaconda
-RUN rm -rf Anaconda3-5.1.0-Linux-x86_64.sh
-RUN echo 'export PATH="~/anaconda/bin:$PATH"' >> ~/.bashrc
-RUN source .bashrc
-	
 # ---------- Cloud Specific Items ----------
 
 RUN install2.r --error \
