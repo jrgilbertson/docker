@@ -78,7 +78,7 @@ RUN R -e "keras::install_keras(tensorflow = 'gpu')"
 
 # ---------- Miscellaneous Packages ----------
 
-# Add additional R packages not in rstudio build
+# Add additional R packages not in RStudio build
 RUN install2.r --error \
 	--deps TRUE \
 	tidyverse caret GGally outliers hrbrthemes reprex \
