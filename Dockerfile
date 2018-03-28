@@ -38,11 +38,34 @@ RUN apt-get update \
 		devtools \
 		testthat
 
+# ---------- Miscellaneous Packages ----------
+
+# Add additional R packages not in rstudio build
+RUN install2.r --error \
+	--deps TRUE \
+	tidyverse caret GGally outliers hrbrthemes reprex \
+	broom lubridate xgboost syuzhet tidytext sparklyr \
+	lime quantmod zoo igraph h2o lintr skimr profvis
+
+# ---------- Keras and Tensorflow ----------
+
+# Add the Keras and Tensorflow packages with Python dependencies
+RUN apt-get install python-pip python-virtualenv -y
+RUN pip install virtualenv
+RUN R -e "devtools::install_github('rstudio/tensorflow')"
+RUN R -e "devtools::install_github('rstudio/keras')"
+RUN R -e "keras::install_keras(tensorflow = 'gpu')"
+
+# ---------- Cloud Specific Items ----------
+
+RUN install2.r --error \
+	--deps TRUE \
+	aws.s3
+
 # ---------- RStan ----------
 
 # Source: https://hub.docker.com/r/andrewheiss/tidyverse-rstanarm/~/dockerfile/
-# Starting with Stan as requires the most manual configuration and is a dependency 
-# for some other packages. Docker Hub (and Docker in general) chokes on memory issues 
+# Note that Docker Hub (and Docker in general) chokes on memory issues 
 # when compiling with gcc, so copy custom CXX settings to /root/.R/Makevars and use 
 # ccache and clang++ instead
 #RUN mkdir -p $HOME/.R/ \
@@ -66,27 +89,3 @@ RUN apt-get -y --no-install-recommends install \
 	# Have to install here even though installed earlier through install2.r. TODO: Explore rstudio vs r libpaths
 	&& R -e "install.packages('devtools')" \
     && R -e "devtools::install_github('hadley/multidplyr')"
-
-# ---------- Keras and Tensorflow ----------
-
-# Add the Keras and Tensorflow packages with Python dependencies
-RUN apt-get install python-pip python-virtualenv -y
-RUN pip install virtualenv
-RUN R -e "devtools::install_github('rstudio/tensorflow')"
-RUN R -e "devtools::install_github('rstudio/keras')"
-RUN R -e "keras::install_keras(tensorflow = 'gpu')"
-
-# ---------- Miscellaneous Packages ----------
-
-# Add additional R packages not in rstudio build
-RUN install2.r --error \
-	--deps TRUE \
-	tidyverse caret GGally outliers hrbrthemes reprex \
-	broom lubridate xgboost syuzhet tidytext sparklyr \
-	lime quantmod zoo igraph h2o lintr skimr profvis
-
-# ---------- Cloud Specific Items ----------
-
-RUN install2.r --error \
-	--deps TRUE \
-	aws.s3
