@@ -38,14 +38,14 @@ RUN apt-get update \
 		devtools \
 		testthat
 
-# ---------- Miscellaneous Packages ----------
+# ---------- R Packages ----------
 
 # Add additional R packages not in rstudio build
 RUN install2.r --error \
 	--deps TRUE \
 	tidyverse caret GGally outliers hrbrthemes reprex \
 	broom lubridate xgboost syuzhet tidytext sparklyr \
-	lime quantmod zoo igraph h2o lintr skimr profvis
+	lime quantmod zoo h2o lintr skimr profvis aws.s3
 
 # ---------- Keras and Tensorflow ----------
 
@@ -56,36 +56,6 @@ RUN R -e "devtools::install_github('rstudio/tensorflow')"
 RUN R -e "devtools::install_github('rstudio/keras')"
 RUN R -e "keras::install_keras(tensorflow = 'gpu')"
 
-# ---------- Cloud Specific Items ----------
-
-RUN install2.r --error \
-	--deps TRUE \
-	aws.s3
-
 # ---------- RStan ----------
 
-# Source: https://hub.docker.com/r/andrewheiss/tidyverse-rstanarm/~/dockerfile/
-# Note that Docker Hub (and Docker in general) chokes on memory issues 
-# when compiling with gcc, so copy custom CXX settings to /root/.R/Makevars and use 
-# ccache and clang++ instead
-#RUN mkdir -p $HOME/.R/ \
-#	&& echo "\nCXX=clang++ -ftemplate-depth-256\n" >> $HOME/.R/Makevars \
-#	&& echo "CC=clang\n" >> $HOME/.R/Makevars
-
-# Install ggplot extensions like ggstance and ggrepel
-# Install ed, since nloptr needs it to compile
-# Install all the dependencies needed by rstanarm and friends
-# Install multidplyr for parallel tidyverse magic
-RUN apt-get -y --no-install-recommends install \
-    ed \
-    clang  \
-    ccache \
-    && install2.r --error \
-        ggstance ggrepel \
-        miniUI PKI RCurl RJSONIO packrat minqa nloptr matrixStats inline \
-        colourpicker DT dygraphs gtools rsconnect shinyjs shinythemes threejs \
-        xts bayesplot lme4 loo rstantools StanHeaders RcppEigen \
-        rstan shinystan rstanarm \
-	# Have to install here even though installed earlier through install2.r. TODO: Explore rstudio vs r libpaths
-	&& R -e "install.packages('devtools')" \
-    && R -e "devtools::install_github('hadley/multidplyr')"
+# Excluding for now given numerous issues with consistent compiling
