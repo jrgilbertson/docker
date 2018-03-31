@@ -26,6 +26,13 @@ RUN apt-get update \
 		ccache \
 		&& R -e "source('https://bioconductor.org/biocLite.R')"
 
+# ---------- R Packages without RStan ----------
+
+# Breaking this up in sections due to high chance of packages failing
+RUN install2.r --error --deps TRUE devtools formatR selectr caTools remotes
+RUN install2.r --error --deps TRUE tidyverse caret GGally outliers hrbrthemes reprex
+RUN install2.r --error --deps TRUE lime quantmod zoo h2o lintr skimr profvis aws.s3
+
 # ---------- RStan Configuration ----------
 
 # Source: https://hub.docker.com/r/andrewheiss/tidyverse-rstanarm/~/dockerfile/
@@ -37,14 +44,10 @@ RUN mkdir -p $HOME/.R/ \
 	&& echo "\nCXX=clang++ -ftemplate-depth-256\n" >> $HOME/.R/Makevars \
 	&& echo "CC=clang\n" >> $HOME/.R/Makevars
 
-# ---------- R Packages ----------
+# ---------- R Packages with RStan ----------
 
-# Add additional R packages not in RStudio build
 # Breaking this up in sections due to high chance of packages failing
-RUN install2.r --error --deps TRUE devtools formatR selectr caTools remotes
-RUN install2.r --error --deps TRUE tidyverse caret GGally outliers hrbrthemes reprex
 RUN install2.r --error --deps TRUE broom lubridate xgboost syuzhet tidytext sparklyr
-RUN install2.r --error --deps TRUE lime quantmod zoo h2o lintr skimr profvis aws.s3
 
 # ---------- Keras and Tensorflow ----------
 
