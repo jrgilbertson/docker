@@ -35,14 +35,9 @@ RUN apt-get update \
 
 # ---------- RStan Configuration ----------
 
-# Source: https://hub.docker.com/r/andrewheiss/tidyverse-rstanarm/~/dockerfile/
-# Starting with Stan as requires the most manual configuration and is a dependency 
-# for some other packages. Docker Hub (and Docker in general) chokes on memory issues 
-# when compiling with gcc, so copy custom CXX settings to /root/.R/Makevars and use 
-# ccache and clang++ instead
+# Global site-wide config for building packages
 RUN mkdir -p $HOME/.R/ \
-	&& echo "\nCXX=clang++ -ftemplate-depth-256\n" >> $HOME/.R/Makevars \
-	&& echo "CC=clang\n" >> $HOME/.R/Makevars
+    && echo "CXXFLAGS=-O3 -mtune=native -march=native -Wno-unused-variable -Wno-unused-function -flto -ffat-lto-objects  -Wno-unused-local-typedefs \n" >> $HOME/.R/Makevars
 
 # Install ggplot extensions like ggstance and ggrepel
 # Install ed, since nloptr needs it to compile
