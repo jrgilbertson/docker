@@ -1,4 +1,4 @@
-# Use the latest RStudio build as the base
+# Use the latest RStudio
 FROM rocker/rstudio:latest
 
 MAINTAINER "Jason Gilbertson" jason.gilbertson@gmail.com
@@ -65,9 +65,10 @@ RUN rm -rf /tmp/downloaded_packages/ /tmp/*.rds
 # ---------- Keras and Tensorflow ----------
 
 # Add the Keras and Tensorflow packages with Python dependencies
-RUN apt-get install python-pip python-virtualenv -y
-RUN pip install virtualenv
-RUN R -e "devtools::install_github('rstudio/tensorflow')"
-RUN R -e "devtools::install_github('rstudio/keras')"
-RUN R -e "devtools::install_github('rstudio/tfestimators')"
-RUN R -e "keras::install_keras(tensorflow = 'gpu')"
+# Not working as intended right now; setup manually in RStudio terminal after install
+#RUN apt-get install python-pip python-virtualenv -y
+#RUN pip install virtualenv
+#RUN R -e "devtools::install_github('rstudio/tensorflow')"
+#RUN R -e "devtools::install_github('rstudio/keras')"
+#RUN R -e "devtools::install_github('rstudio/tfestimators')"
+#RUN R -e "keras::install_keras(tensorflow = 'gpu')"

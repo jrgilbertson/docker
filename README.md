@@ -4,6 +4,8 @@ R data science machine which includes RStudio, Shiny, Keras and Tensorflow along
 
 The purpose of this build is for R&D and exploratory work. It would be more Docker-esque if this was broken into multiple, more focused images. For exploratory work, however, I prefer to reduce friction so the goal is to integrate the main tools into one build.
 
+As of 4/2/18, having trouble with Keras/Tensorflow installing as part of this process for GPU support. Commenting out for now until can fix the issue.
+
 # Quickstart
 
 Start with the default options of user = rstudio and password = rstudio. This is **not recommended** for public instances.
