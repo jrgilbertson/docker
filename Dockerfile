@@ -65,7 +65,8 @@ RUN rm -rf /tmp/downloaded_packages/ /tmp/*.rds
 # ---------- NVIDIA Drivers ----------
 
 # Add required libraries
-RUN apt-get -y --no-install-recommends install gnupg
+RUN apt-get -y --install-recommends install gnupg \
+		dirmngr
 
 # Step 1 on base machine: https://tensorflow.rstudio.com/tools/local_gpu.html
 # Step 2 on base machine: https://github.com/NVIDIA/nvidia-docker
