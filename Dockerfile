@@ -67,8 +67,6 @@ RUN rm -rf /tmp/downloaded_packages/ /tmp/*.rds
 # Step 2 on base machine: https://github.com/NVIDIA/nvidia-docker
 # Source: https://gitlab.com/nvidia/cuda/blob/ubuntu16.04/9.0/runtime/cudnn7/Dockerfile
 ARG repository
-FROM ${repository}:9.0-runtime-ubuntu16.04
-LABEL maintainer "NVIDIA CORPORATION <cudatools@nvidia.com>"
 
 ENV CUDNN_VERSION 7.1.2.21
 LABEL com.nvidia.cudnn.version="${CUDNN_VERSION}"
