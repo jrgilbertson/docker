@@ -63,6 +63,10 @@ RUN install2.r --error --deps TRUE lubridate xgboost syuzhet tidytext sparklyr
 RUN rm -rf /tmp/downloaded_packages/ /tmp/*.rds
 
 # ---------- NVIDIA Drivers ----------
+
+# Add required libraries
+RUN apt-get -y --no-install-recommends install gnupg
+
 # Step 1 on base machine: https://tensorflow.rstudio.com/tools/local_gpu.html
 # Step 2 on base machine: https://github.com/NVIDIA/nvidia-docker
 # Source: https://gitlab.com/nvidia/cuda/blob/ubuntu16.04/9.0/runtime/cudnn7/Dockerfile
