@@ -66,11 +66,9 @@ RUN rm -rf /tmp/downloaded_packages/ /tmp/*.rds
 # Step 1 on base machine: https://tensorflow.rstudio.com/tools/local_gpu.html
 # Step 2 on base machine: https://github.com/NVIDIA/nvidia-docker
 # Source: https://gitlab.com/nvidia/cuda/blob/ubuntu16.04/9.0/runtime/cudnn7/Dockerfile
-ARG repository
-
-ENV CUDNN_VERSION 7.1.2.21
-LABEL com.nvidia.cudnn.version="${CUDNN_VERSION}"
+ENV NCCL_VERSION 2.1.15
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
-            libcudnn7=$CUDNN_VERSION-1+cuda9.0 && \
+        cuda-libraries-$CUDA_PKG_VERSION \
+        libnccl2=$NCCL_VERSION-1+cuda9.0 && \
     rm -rf /var/lib/apt/lists/*
