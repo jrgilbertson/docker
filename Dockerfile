@@ -62,6 +62,17 @@ RUN install2.r --error --deps TRUE lime quantmod zoo h2o lintr skimr profvis aws
 RUN install2.r --error --deps TRUE lubridate xgboost syuzhet tidytext sparklyr
 RUN rm -rf /tmp/downloaded_packages/ /tmp/*.rds
 
+# ---------- NVIDIA Drivers ----------
+# Step 1 on base machine: https://tensorflow.rstudio.com/tools/local_gpu.html
+# Step 2 on base machine: https://github.com/NVIDIA/nvidia-docker
+# Source: https://gitlab.com/nvidia/cuda/blob/ubuntu16.04/9.0/runtime/cudnn7/Dockerfile
+ENV CUDNN_VERSION 7.1.2.21
+LABEL com.nvidia.cudnn.version="${CUDNN_VERSION}"
+
+RUN apt-get update && apt-get install -y --no-install-recommends \
+            libcudnn7=$CUDNN_VERSION-1+cuda9.0 && \
+    rm -rf /var/lib/apt/lists/*
+
 # ---------- Keras and Tensorflow ----------
 
 # Add the Keras and Tensorflow packages with Python dependencies
