@@ -56,7 +56,7 @@ RUN apt-get -y --no-install-recommends install \
 # ---------- Various R Packages ----------
 
 # Breaking this up in sections due to high chance of packages failing
-RUN install2.r --error --deps TRUE devtools formatR selectr caTools remotes
+RUN install2.r --error --deps TRUE devtools formatR selectr caTools remotes DataExplorer
 RUN install2.r --error --deps TRUE tidyverse caret GGally outliers hrbrthemes reprex
 RUN install2.r --error --deps TRUE lime quantmod zoo h2o lintr skimr profvis aws.s3
 RUN install2.r --error --deps TRUE lubridate xgboost syuzhet tidytext sparklyr
